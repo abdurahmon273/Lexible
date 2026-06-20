@@ -718,92 +718,22 @@ html[data-theme="light"] .total-bar-wrap { background: rgba(0, 0, 0, 0.07); }
     box-shadow: 0 6px 0 #991b1b, 0 10px 32px rgba(239,68,68,0.42);
 }
 
-/* ── Locked — unique muted color per folder ─────────────── */
-.rm-tile.locked.c0 {
+/* ── Locked — uniform gray for all folders ─────────────── */
+.rm-tile.locked {
     background:
         repeating-linear-gradient(-45deg,
             transparent 0, transparent 9px,
-            rgba(255,255,255,0.028) 9px, rgba(255,255,255,0.028) 10px),
-        linear-gradient(155deg, #1e3d2a 0%, #142b1d 45%, #0d1e13 100%);
-    color: #3a7054;
-    box-shadow: 0 5px 0 #091410, 0 8px 22px rgba(0,0,0,0.38);
-}
-.rm-tile.locked.c1 {
-    background:
-        repeating-linear-gradient(-62deg,
-            transparent 0, transparent 10px,
-            rgba(255,255,255,0.028) 10px, rgba(255,255,255,0.028) 11px),
-        linear-gradient(155deg, #1a2d52 0%, #11203e 45%, #0a1428 100%);
-    color: #3a5c90;
-    box-shadow: 0 5px 0 #071020, 0 8px 22px rgba(0,0,0,0.38);
-}
-.rm-tile.locked.c2 {
-    background:
-        repeating-linear-gradient(-28deg,
-            transparent 0, transparent 8px,
-            rgba(255,255,255,0.028) 8px, rgba(255,255,255,0.028) 9px),
-        linear-gradient(155deg, #2d1c52 0%, #20133c 45%, #140b26 100%);
-    color: #6a4aa0;
-    box-shadow: 0 5px 0 #0e071e, 0 8px 22px rgba(0,0,0,0.38);
-}
-.rm-tile.locked.c3 {
-    background:
-        repeating-linear-gradient(-52deg,
-            transparent 0, transparent 11px,
-            rgba(255,255,255,0.028) 11px, rgba(255,255,255,0.028) 12px),
-        linear-gradient(155deg, #3d2e10 0%, #2c200a 45%, #1c1406 100%);
-    color: #8a6a1e;
-    box-shadow: 0 5px 0 #0e0a02, 0 8px 22px rgba(0,0,0,0.38);
-}
-.rm-tile.locked.c4 {
-    background:
-        repeating-linear-gradient(-57deg,
-            transparent 0, transparent 9px,
-            rgba(255,255,255,0.028) 9px, rgba(255,255,255,0.028) 10px),
-        linear-gradient(155deg, #163540 0%, #0f252e 45%, #08181e 100%);
-    color: #2a6a78;
-    box-shadow: 0 5px 0 #040e12, 0 8px 22px rgba(0,0,0,0.38);
-}
-.rm-tile.locked.c5 {
-    background:
-        repeating-linear-gradient(-35deg,
-            transparent 0, transparent 8px,
-            rgba(255,255,255,0.028) 8px, rgba(255,255,255,0.028) 9px),
-        linear-gradient(155deg, #3d1824 0%, #2c1018 45%, #1c0a0f 100%);
-    color: #7a2a3c;
-    box-shadow: 0 5px 0 #0e0208, 0 8px 22px rgba(0,0,0,0.38);
+            rgba(255,255,255,0.022) 9px, rgba(255,255,255,0.022) 10px),
+        linear-gradient(155deg, #2a2a2a 0%, #1e1e1e 45%, #141414 100%);
+    color: #555555;
+    box-shadow: 0 5px 0 #0a0a0a, 0 8px 22px rgba(0,0,0,0.38);
 }
 
-/* Light theme locked overrides */
-html[data-theme="light"] .rm-tile.locked.c0 {
-    background: linear-gradient(155deg, #d1fae5 0%, #a7f3d0 45%, #6ee7b7 100%);
-    color: #065f46;
-    box-shadow: 0 5px 0 #a7f3d0, 0 8px 22px rgba(0,0,0,0.14);
-}
-html[data-theme="light"] .rm-tile.locked.c1 {
-    background: linear-gradient(155deg, #dbeafe 0%, #bfdbfe 45%, #93c5fd 100%);
-    color: #1e3a8a;
-    box-shadow: 0 5px 0 #bfdbfe, 0 8px 22px rgba(0,0,0,0.14);
-}
-html[data-theme="light"] .rm-tile.locked.c2 {
-    background: linear-gradient(155deg, #ede9fe 0%, #ddd6fe 45%, #c4b5fd 100%);
-    color: #4c1d95;
-    box-shadow: 0 5px 0 #ddd6fe, 0 8px 22px rgba(0,0,0,0.14);
-}
-html[data-theme="light"] .rm-tile.locked.c3 {
-    background: linear-gradient(155deg, #fef3c7 0%, #fde68a 45%, #fcd34d 100%);
-    color: #78350f;
-    box-shadow: 0 5px 0 #fde68a, 0 8px 22px rgba(0,0,0,0.14);
-}
-html[data-theme="light"] .rm-tile.locked.c4 {
-    background: linear-gradient(155deg, #cffafe 0%, #a5f3fc 45%, #67e8f9 100%);
-    color: #164e63;
-    box-shadow: 0 5px 0 #a5f3fc, 0 8px 22px rgba(0,0,0,0.14);
-}
-html[data-theme="light"] .rm-tile.locked.c5 {
-    background: linear-gradient(155deg, #ffe4e6 0%, #fecdd3 45%, #fda4af 100%);
-    color: #881337;
-    box-shadow: 0 5px 0 #fecdd3, 0 8px 22px rgba(0,0,0,0.14);
+/* Light theme locked */
+html[data-theme="light"] .rm-tile.locked {
+    background: linear-gradient(155deg, #e5e7eb 0%, #d1d5db 45%, #9ca3af 100%);
+    color: #6b7280;
+    box-shadow: 0 5px 0 #d1d5db, 0 8px 22px rgba(0,0,0,0.14);
 }
 
 .rm-tile-num {

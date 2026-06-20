@@ -27,21 +27,42 @@ class BotSettings extends Component
             'confirm_bot_token' => 'required|string',
         ]);
 
-        $token = trim($this->confirm_bot_token);
+        $newToken = trim($this->confirm_bot_token);
+        $oldToken = trim((string) $this->globalSetting->confirm_bot_token);
 
+        // 1. Eski bot'ning webhook'ini o'chir (token o'zgargan bo'lsa)
+        if ($oldToken && $oldToken !== $newToken) {
+            try {
+                Http::retry(2, 1000, throw: false)
+                    ->timeout(15)
+                    ->post("https://api.telegram.org/bot{$oldToken}/deleteWebhook", [
+                        'drop_pending_updates' => true,
+                    ]);
+            } catch (\Throwable $e) {
+                Log::warning('Telegram deleteWebhook (old token) failed', [
+                    'message' => $e->getMessage(),
+                ]);
+            }
+        }
+
+        // 2. DB ga yangi tokenni saqlash
         $this->globalSetting->update([
-            'confirm_bot_token' => $token,
+            'confirm_bot_token' => $newToken,
         ]);
+        $this->confirm_bot_token = $newToken;
 
-        $this->confirm_bot_token = $token;
-        $webhookUrl = route('botwebhook.confirm', ['token' => $token]);
+        // 3. Yangi token bilan webhook o'rnat
+        $webhookUrl = route('botwebhook.confirm', ['token' => $newToken]);
 
+        // Avval yangi bot'ning eski webhook'ini ham tozalab ol
         try {
             Http::retry(2, 1000, throw: false)
                 ->timeout(15)
-                ->post("https://api.telegram.org/bot{$token}/deleteWebhook");
+                ->post("https://api.telegram.org/bot{$newToken}/deleteWebhook", [
+                    'drop_pending_updates' => true,
+                ]);
         } catch (\Throwable $e) {
-            Log::warning('Telegram deleteWebhook failed', [
+            Log::warning('Telegram deleteWebhook (new token) failed', [
                 'message' => $e->getMessage(),
             ]);
         }
@@ -49,8 +70,9 @@ class BotSettings extends Component
         try {
             $webhookResponse = Http::retry(2, 1000, throw: false)
                 ->timeout(20)
-                ->post("https://api.telegram.org/bot{$token}/setWebhook", [
-                    'url' => $webhookUrl,
+                ->post("https://api.telegram.org/bot{$newToken}/setWebhook", [
+                    'url'                => $webhookUrl,
+                    'drop_pending_updates' => true,
                 ]);
         } catch (\Throwable $e) {
             $this->dispatch(
@@ -75,7 +97,7 @@ class BotSettings extends Component
         $this->dispatch(
             'settingsTokenUpdated',
             type: 'error',
-            message: 'Telegram Bot Token saqlandi, lekin webhookni sozlashda xatolik yuz berdi: '.($webhookResponse->json('description') ?? 'unknown error')
+            message: 'Token saqlandi, lekin webhook sozlanmadi: ' . ($webhookResponse->json('description') ?? 'unknown error')
         );
     }
 
